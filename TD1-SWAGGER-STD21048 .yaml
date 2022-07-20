@@ -4,7 +4,9 @@ info:
   description: 'Global description of my API'
   version: 1.0.0
 servers:
- - url: https://STD21048.com
+ # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/HEISOA2/STD21048/1.0.0
 tags: 
  - name: Students
 
@@ -50,7 +52,107 @@ paths:
                 $ref: '#/components/schemas/Student'
         400:
           description: Bad request 
-   
+ /students/{id}:
+    get:
+      tags:
+      - Students
+      summary: Find students by Id 
+      description: Get specified student
+      parameters:
+        - name: id
+          in: path
+          schema : 
+            type : integer
+          required : true
+      responses:
+        200: 
+          description: Return the student
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        400:
+          description: Bad request
+    put:
+      tags:
+      - Students
+      summary: Updated student
+      description: Global modification
+      operationId: updateStudent
+      parameters: 
+      - name: id
+        in: path
+        description: name that need to be updated
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Updated student object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      responses:
+        400:
+          description: Invalid student supplied
+          content: {}
+        404:
+          description: Student not found
+          content: {}
+    patch:
+      tags:
+      - Students
+      summary: Updated student
+      description: Partial modification.
+      operationId: updatePartialStudent
+      parameters:
+      - name: id
+        in: path
+        description: |
+          Possible updates on:
+          * name : change
+          * address : change
+          * birth_date : change
+       
+        required: true
+        schema: 
+          type: string
+      
+      responses: 
+        400:
+          description: Invalid student supplied
+          content: {}
+        404:
+          description: Student not found
+          content: {}
+          
+    
+    delete:
+      tags:
+      - Students
+      summary: Delete student
+      description: Delete.
+      operationId: deleteStudent
+      parameters:
+      - name: id
+        in: path
+        description: The name that needs to be deleted
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Return  the updated student
+        400:
+          description: Invalid student supplied
+          content: {}
+        404:
+          description: Student not found
+          content: {}
+    
 
  
 
@@ -186,5 +288,3 @@ components:
         createdDate :
           type: string
           example : "2022-01-01"
-
-               
